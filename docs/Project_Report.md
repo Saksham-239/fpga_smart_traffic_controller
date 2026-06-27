@@ -64,6 +64,12 @@ graph TD
     NIGHT -- "night_mode == 0" --> AR01
 ```
 
+### RTL Schematic Block Diagram
+Below is the synthesized circuit schematic generated from the Quartus Prime RTL Viewer:
+
+![RTL Schematic Block Diagram](../images/block_diagram.png)
+
+
 ### Functional Submodules
 1.  **`debounce` module:** Filters mechanical bounce from the active-low pedestrian push-button (KEY[0]) to generate a clean, single-cycle trigger pulse.
 2.  **`traffic_fsm` module:** Implements the state transitions, reads sensors/overrides, generates load durations for the countdown timer, and drives individual traffic lights.
@@ -91,6 +97,14 @@ graph TD
 | **`LEDR[15]`** | Output | LED (Red) | `PIN_G15` | `LEDR15` | Night Mode Active Indicator |
 | **`HEX0[6:0]`** | Output | 7-Segment | `PIN_H22` down to `PIN_G18` | `HEX0` (Display 0) | Remaining Seconds (0-9) |
 
+### Pin Mapping and Wire Bond Specifications
+Below is the pin assignment table and the package wire bond diagram for the Cyclone IV E FPGA chip:
+
+![Quartus Hardware Mapping Table](../images/hardware_mapping.png)
+
+![Cyclone IV E Wire Bond Pinout Map](../images/pinout.png)
+
+
 ---
 
 ## 3. Component Selection & Hardware Specifications
@@ -115,6 +129,19 @@ graph TD
 | **Emergency Priority** | `SW[4] = 1` | Interrupts sequence instantly. Main Road (Road 0) turns Green. All other roads Red. | **Pass** |
 | **Night Caution Mode** | `SW[5] = 1` | Enters flashing yellow on Road 0 (0.5s toggle rate) and solid red on other lanes. | **Pass** |
 | **Hardware Reset** | Pulsed `KEY[1]` | Instantly terminates any mode/phase and restarts at `ROAD0_GREEN`. | **Pass** |
+
+### Physical Testing Board Outputs
+Here are the verified hardware states observed on the Altera DE2-115 development board during execution:
+
+| Normal Cycle Phases | Adaptive Sensor Extensions | Override Modes & Reset |
+| :---: | :---: | :---: |
+| ![Main Green](../images/board_main_green.png)<br>**Main Green (R0)** | ![Main Sensor Extension 1](../images/board_sensor_main_extend_1.png)<br>**Main Extension Phase 1** | ![Emergency Mode](../images/board_emergency.png)<br>**Emergency Mode Override** |
+| ![Main Yellow](../images/board_main_yellow.png)<br>**Main Yellow (R0)** | ![Main Sensor Extension 2](../images/board_sensor_main_extend_2.png)<br>**Main Extension Phase 2** | ![Night Caution Mode](../images/board_night_mode.png)<br>**Night Caution Flashing** |
+| ![All Red Transition](../images/board_all_red_01.png)<br>**All-Red Safe Transition** | ![Side Sensor Extension](../images/board_sensor_side_extend.png)<br>**Side Extension Phase** | ![Pedestrian Crossing](../images/board_ped_crossing.png)<br>**Pedestrian Crossing Active** |
+| ![Side Green](../images/board_side_green.png)<br>**Side Green (R1)** | | ![All Red after Ped](../images/board_ped_all_red.png)<br>**Buffer After Pedestrian Crossing** |
+| ![Side Yellow](../images/board_side_yellow.png)<br>**Side Yellow (R1)** | | ![Hardware Reset](../images/board_reset.png)<br>**Global System Reset** |
+| ![Side Red Transition](../images/board_side_red.png)<br>**Side Red Transition** | | |
+
 
 ### Synthesis Metrics
 *   **Logic Element Utilization:** < 1% (Highly optimized)

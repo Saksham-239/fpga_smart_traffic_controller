@@ -137,6 +137,8 @@ graph LR
     NIGHT --> OVR_LEDS
 ```
 
+![RTL Schematic Block Diagram](images/block_diagram.png)
+
 *For details about states and transitions, read [docs/Project_Report.md](docs/Project_Report.md#2-system-design--signal-flow).*
 
 ---
