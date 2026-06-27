@@ -148,21 +148,21 @@ graph LR
 We provide a comprehensive testbench [tb_traffic_ctrl.v](simulation/tb_traffic_ctrl.v) to verify functionality before board programming. The testbench overrides clock divisors internally to run simulations in microseconds.
 
 ### Steps to Simulate in ModelSim
+For automated execution, compile, signal plotting, and zoom setup, we provide a ModelSim run script:
+
 1.  Launch **ModelSim-Intel FPGA Edition**.
-2.  Select **File $\rightarrow$ Change Directory...** and select the `simulation/` directory.
-3.  Execute the following commands in the ModelSim transcript console:
+2.  Select **File $\rightarrow$ Change Directory...** and select the `simulation/` directory of the project.
+3.  In the ModelSim console, type:
     ```tcl
-    # Compile the synthesizable source files and the testbench
-    vlib work
-    vlog ../verilog/*.v tb_traffic_ctrl.v
-    
-    # Start the simulation
-    vsim work.tb_traffic_ctrl
-    
-    # Run the simulation
-    run -all
+    do run_sim.do
     ```
-4.  Examine the console transcript. It displays structured logs detailing FSM state changes, sensor extensions, and emergency priority responses.
+This script will compile all files, load the testbench, add top-level ports and internal FSM states to the Wave window, run the full test suite, and zoom to fit the waveform display automatically. Alternatively, you can run manually:
+```tcl
+vlib work
+vlog ../verilog/*.v tb_traffic_ctrl.v
+vsim work.tb_traffic_ctrl
+run -all
+```
 
 ---
 
