@@ -1,0 +1,53 @@
+# =========================================================================
+# Intel Quartus Prime & ModelSim Git Ignore File
+# =========================================================================
+
+# Quartus Compilation & Intermediate Directories
+db/
+incremental_db/
+output_files/
+hc_output/
+hps_isw_handoff/
+greybox_tmp/
+
+# Quartus Project Settings, Backups, and Temporary Files
+*.bak
+*.qi
+*.qws
+*.qws.bak
+*.done
+*.jdi
+*.pin
+*.sld
+*.summary
+*.rpt
+*.rpt.xml
+*.smsg
+*.flow.rpt
+*.map.rpt
+*.fit.rpt
+*.asm.rpt
+*.sta.rpt
+*.eda.rpt
+
+# Hardware Bitstream Files (Usually generated on compile)
+*.sof
+*.pof
+
+# ModelSim & Other RTL Simulator Outputs
+work/
+transcript
+*.wlf
+vsim.wlf
+*.mpf
+*.ini
+msim_transcript
+sim_build/
+*.vcd
+*.ghw
+
+# OS/IDE Temporary Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
